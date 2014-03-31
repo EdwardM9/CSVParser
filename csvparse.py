@@ -8,16 +8,28 @@ Distributed under the Creative Commons Attribution 3.0 Unported license.
 """
 
 import wx
+import constants as c
 
-app = wx.App()
+class ParseFrame(wx.Frame):
+	def __init__(self, *args, **kwargs):
+		super(ParseFrame, self).__init__(*args, **kwargs)
+		self.initialize()    
+		self.Show()
 
-frame = wx.Frame(None, -1, 'simple.py')
-frame.Show()
+	def initialize(self):
+		self.create_menu()
+		self.SetSize((c.APP_HEIGHT, c.APP_WIDTH))
+		self.Center()
 
-app.MainLoop()
+	def create_menu(self):
+		menubar = wx.MenuBar()
+		self.SetMenuBar(menubar)
+
+	def on_quit(self, e):
+		self.Close()
 
 if __name__ == '__main__':
   
     app = wx.App()
-    Example(None, title='Size')
+    ParseFrame(None, title='CSV Charting Utility')
     app.MainLoop()

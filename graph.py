@@ -63,9 +63,9 @@ def visualize_type():
 	return
 
 def main():
-    visualize_days()
-    visualize_type()
-
+    #visualize_days()
+    #visualize_type()
+    print("DONE")
 
 if __name__ == "__main__":
     main()

@@ -8,6 +8,8 @@ Distributed under the Creative Commons Attribution 3.0 Unported license.
 """
 
 import wx
+import wx.lib
+from wx.lib import filebrowsebutton
 import constants as c
 import filebrowserpanel as fbp
 class ParseFrame(wx.Frame):
@@ -23,9 +25,9 @@ class ParseFrame(wx.Frame):
 
 	def create_interface(self):
 		sizer = wx.BoxSizer(wx.VERTICAL)
-		
+
 		fbPanel = fbp.FileBrowsePanel(self)
-		sizer.Add(fbPanel, wx.ALIGN_RIGHT, wx.EXPAND)
+		sizer.Add(fbPanel, wx.ALIGN_TOP, wx.EXPAND)
 		
 		self.SetSizer(sizer)
 

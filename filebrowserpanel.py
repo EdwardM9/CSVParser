@@ -11,3 +11,4 @@ import wx
 class FileBrowsePanel(wx.Panel):
 	def __init__(self, *args, **kwargs):
 		super(FileBrowsePanel, self).__init__(*args, **kwargs)
+		bButton = wx.lib.filebrowsebutton.DirBrowseButton(self)

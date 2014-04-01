@@ -27,8 +27,10 @@ class ParseFrame(wx.Frame):
 		sizer = wx.BoxSizer(wx.VERTICAL)
 
 		fbPanel = fbp.FileBrowsePanel(self)
-		sizer.Add(fbPanel, wx.ALIGN_TOP, wx.EXPAND)
+		sizer2 = wx.BoxSizer(wx.HORIZONTAL)
+		sizer2.Add(fbPanel, wx.ALIGN_TOP, wx.EXPAND)
 		
+		sizer.Add(sizer2, wx.ALIGN_TOP, wx.EXPAND)
 		self.SetSizer(sizer)
 
 		self.SetSize((c.APP_HEIGHT, c.APP_WIDTH))

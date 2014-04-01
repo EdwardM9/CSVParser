@@ -12,6 +12,7 @@ import wx.lib
 from wx.lib import filebrowsebutton
 import constants as c
 import filebrowserpanel as fbp
+import graph
 class ParseFrame(wx.Frame):
 	def __init__(self, *args, **kwargs):
 		super(ParseFrame, self).__init__(*args, **kwargs)
@@ -44,7 +45,7 @@ class ParseFrame(wx.Frame):
 
 	def get_path(self, e):
 		self.filePath = self.fbPanel.get_file_path()
-		print self.filePath
+		graph.visualize_days(self.filePath)
 	def on_quit(self, e):
 		self.Close()
 

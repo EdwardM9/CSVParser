@@ -7,9 +7,6 @@ Distributed under the Creative Commons Attribution 3.0 Unported license.
 
 import csv
 
-#Hardcoded path to file
-MY_FILE = "../data/sample_sfpd_incident_all.csv"
-
 def parse(raw_file, delimiter):
 	""" Parses a raw CSV file to a JSON-line object. """
 
@@ -29,7 +26,7 @@ def parse(raw_file, delimiter):
 	opened_file.close()
 
 	# Build data structure
-	return parsed_data
+	return parsed_data, fields
 
 def main():
     # Call our parse function and give it the needed parameters

@@ -3,7 +3,7 @@ Data Visualization
 
 Takes in parsed data from a CSV file and renders it onto a chart.
 
-Copyright(c) 2014 Moreno
+Copyright(c) 2014 Edward Moreno
 Distributed under the Creative Commons Attribution 3.0 Unported license.
 """
 
@@ -16,9 +16,9 @@ import parse as p
 
 MY_FILE = "../data/sample_sfpd_incident_all.csv"
 
-def visualize_days():
+def visualize_days(file_path):
 	#Parse data
-	data_file = p.parse(MY_FILE, ",")
+	data_file, headers = p.parse(file_path, ",")
 
 	#Make a counter from each day of the week
 	counter = Counter(item["DayOfWeek"] for item in data_file)

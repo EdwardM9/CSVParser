@@ -16,5 +16,10 @@ class FileBrowsePanel(wx.Panel):
 		self.create_panel()
 
 	def create_panel(self):
-		bButton = wx.lib.filebrowsebutton.FileBrowseButton(self, 
-			labelText = "Find the path to a .CSV file.", fileMask = "*.csv")
+		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		self.bButton = wx.lib.filebrowsebutton.FileBrowseButton(self, 
+			labelText = "Find the path to a .CSV file:", 
+			fileMask = "*.csv", size = (1050, -1))
+
+	def get_file_path(self):
+		return self.bButton.GetValue()

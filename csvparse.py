@@ -26,19 +26,25 @@ class ParseFrame(wx.Frame):
 	def create_interface(self):
 		sizer = wx.BoxSizer(wx.VERTICAL)
 
-		fbPanel = fbp.FileBrowsePanel(self)
+		self.fbPanel = fbp.FileBrowsePanel(self)
 		sizer2 = wx.BoxSizer(wx.HORIZONTAL)
-		sizer2.Add(fbPanel, wx.ALIGN_TOP, wx.EXPAND)
+		sizer2.Add(self.fbPanel, wx.ALIGN_TOP, wx.EXPAND)
+		gButton = wx.Button(self, label='Use File')
+		gButton.Bind(wx.EVT_BUTTON, self.get_path)
+		sizer2.Add(gButton, wx.ALIGN_RIGHT, wx.SHAPED)
 		
 		sizer.Add(sizer2, wx.ALIGN_TOP, wx.EXPAND)
 		self.SetSizer(sizer)
-
+		self.SetAutoLayout(True)
 		self.SetSize((c.APP_HEIGHT, c.APP_WIDTH))
 
 	def create_menu(self):
 		menubar = wx.MenuBar()
 		self.SetMenuBar(menubar)
 
+	def get_path(self, e):
+		self.filePath = self.fbPanel.get_file_path()
+		print self.filePath
 	def on_quit(self, e):
 		self.Close()
 

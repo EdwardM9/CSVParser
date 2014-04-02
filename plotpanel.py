@@ -17,5 +17,5 @@ class PlotPanel(wx.Panel):
 
 	def create_panel(self):
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
-		self.ppanel = wxmpl.PlotPanel(self, 123, size = (12,7))
+		self.ppanel = wxmpl.PlotPanel(self, 123)#, size = (12,7))
 		sizer.Add(self.ppanel, wx.ALIGN_CENTER, wx.EXPAND)

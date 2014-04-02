@@ -13,7 +13,6 @@ from wx.lib import filebrowsebutton
 import constants as c
 import filebrowserpanel as fbp
 import plotpanel as pp
-import graph
 
 import parse as p
 class ParseFrame(wx.Frame):
@@ -38,8 +37,13 @@ class ParseFrame(wx.Frame):
 		sizer2.Add(gButton, wx.ALIGN_RIGHT, wx.SHAPED)
 		
 		self.plotPanel = pp.PlotPanel(self)
+		gsizer = wx.GridBagSizer(5,8)
+		gsizer.Add(self.plotPanel, pos = (2,2), span = (6,6))
+		self.cb = wx.ComboBox(self, style=wx.CB_READONLY)
+		gsizer.Add(self.cb, pos = (2,8), flag=wx.TOP|wx.RIGHT|wx.ALIGN_RIGHT)
+
 		sizer.Add(sizer2, wx.ALIGN_TOP, wx.EXPAND)
-		sizer.Add(self.plotPanel, wx.ALIGN_CENTER, wx.EXPAND)
+		sizer.Add(gsizer)
 		self.SetSizer(sizer)
 		self.SetAutoLayout(True)
 		self.SetSize((c.APP_HEIGHT, c.APP_WIDTH))
@@ -51,6 +55,8 @@ class ParseFrame(wx.Frame):
 	def get_path(self, e):
 		self.filePath = self.fbPanel.get_file_path()
 		self.data, self.headers = p.parse(self.filePath, ",")
+		self.cb.Clear()
+		self.cb.AppendItems(self.headers)
 
 	def on_quit(self, e):
 		self.Close()

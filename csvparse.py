@@ -39,7 +39,13 @@ class ParseFrame(wx.Frame):
 		self.plotPanel = pp.PlotPanel(self)
 		self.gsizer = wx.GridBagSizer(5,8)
 		self.gsizer.Add(self.plotPanel, pos = (2,2), span = (6,6))
-
+		self.cb = wx.ComboBox(self, style=wx.CB_READONLY)
+		cbLabel = wx.StaticText(self, label = "X-Axis")
+		self.genButton = wx.Button(self, label="Generate Chart")
+		self.genButton.Bind(wx.EVT_BUTTON, self.generate_chart)
+		self.gsizer.Add(cbLabel, pos = (2,8), flag=wx.TOP|wx.RIGHT|wx.ALIGN_RIGHT)
+		self.gsizer.Add(self.cb, pos = (3,8), flag=wx.TOP|wx.RIGHT|wx.ALIGN_RIGHT)
+		self.gsizer.Add(self.genButton, pos = (8,8), flag=wx.TOP|wx.RIGHT|wx.ALIGN_RIGHT)
 		self.sizer.Add(sizer2, wx.ALIGN_TOP, wx.EXPAND)
 		self.sizer.Add(self.gsizer)
 		self.SetSizer(self.sizer)
@@ -53,17 +59,12 @@ class ParseFrame(wx.Frame):
 	def get_path(self, e):
 		self.filePath = self.fbPanel.get_file_path()
 		self.data, self.headers = p.parse(self.filePath, ",")
-		self.cb = wx.ComboBox(self, style=wx.CB_READONLY, choices = self.headers)
-		cbLabel = wx.StaticText(self, label = "X-Axis")
-		self.genButton = wx.Button(self, label="Generate Chart")
-		self.genButton.Bind(wx.EVT_BUTTON, self.generate_chart)
-		self.gsizer.Add(cbLabel, pos = (2,8), flag=wx.TOP|wx.RIGHT|wx.ALIGN_RIGHT)
-		self.gsizer.Add(self.cb, pos = (3,8), flag=wx.TOP|wx.RIGHT|wx.ALIGN_RIGHT)
-		self.gsizer.Add(self.genButton, pos = (8,8), flag=wx.TOP|wx.RIGHT|wx.ALIGN_RIGHT)
+		self.cb.Clear()
+		self.cb.AppendItems(self.headers)
 		self.Layout()
 
 	def generate_chart(self, e):
-		self.plotPanel.plot()
+		self.plotPanel.plot(self.data, self.cb.GetValue())
 
 	def on_quit(self, e):
 		self.Close()

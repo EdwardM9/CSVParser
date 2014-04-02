@@ -13,6 +13,8 @@ import matplotlib
 from matplotlib import numpy
 from numpy import arange, sin
 import wxmpl
+from collections import Counter
+
 class PlotPanel(wx.Panel):
 	def __init__(self, *args, **kwargs):
 		super(PlotPanel, self).__init__(*args, **kwargs)
@@ -23,10 +25,15 @@ class PlotPanel(wx.Panel):
 		self.ppanel = wxmpl.PlotPanel(self, 123)#, size = (12,7))
 		sizer.Add(self.ppanel, wx.ALIGN_CENTER, wx.EXPAND)
 
-	def plot(self):
-		x = arange(0.0, 2, .01)
-		y = sin(1.2*x)
+	def plot(self, data, title):
+		"""x = arange(0.0, 2, .01)
+		y = sin(1.2*x)"""
 		fig = self.ppanel.get_figure()
 		axes = fig.gca()
-		axes.plot(x,y)
+		values = []
+		for item in data:
+			values.append(item.get(title))
+		axes.plot(values)
+
+		#Force redraw update
 		self.ppanel.draw()

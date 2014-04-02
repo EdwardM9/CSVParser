@@ -13,7 +13,7 @@ from wx.lib import filebrowsebutton
 import constants as c
 import filebrowserpanel as fbp
 import plotpanel as pp
-
+import matplotlib.pyplot as plt
 import parse as p
 class ParseFrame(wx.Frame):
 	def __init__(self, *args, **kwargs):
@@ -27,7 +27,7 @@ class ParseFrame(wx.Frame):
 		self.Center()
 
 	def create_interface(self):
-		sizer = wx.BoxSizer(wx.VERTICAL)
+		self.sizer = wx.BoxSizer(wx.VERTICAL)
 
 		self.fbPanel = fbp.FileBrowsePanel(self)
 		sizer2 = wx.BoxSizer(wx.HORIZONTAL)
@@ -37,14 +37,12 @@ class ParseFrame(wx.Frame):
 		sizer2.Add(gButton, wx.ALIGN_RIGHT, wx.SHAPED)
 		
 		self.plotPanel = pp.PlotPanel(self)
-		gsizer = wx.GridBagSizer(5,8)
-		gsizer.Add(self.plotPanel, pos = (2,2), span = (6,6))
-		self.cb = wx.ComboBox(self, style=wx.CB_READONLY)
-		gsizer.Add(self.cb, pos = (2,8), flag=wx.TOP|wx.RIGHT|wx.ALIGN_RIGHT)
+		self.gsizer = wx.GridBagSizer(5,8)
+		self.gsizer.Add(self.plotPanel, pos = (2,2), span = (6,6))
 
-		sizer.Add(sizer2, wx.ALIGN_TOP, wx.EXPAND)
-		sizer.Add(gsizer)
-		self.SetSizer(sizer)
+		self.sizer.Add(sizer2, wx.ALIGN_TOP, wx.EXPAND)
+		self.sizer.Add(self.gsizer)
+		self.SetSizer(self.sizer)
 		self.SetAutoLayout(True)
 		self.SetSize((c.APP_HEIGHT, c.APP_WIDTH))
 
@@ -55,8 +53,17 @@ class ParseFrame(wx.Frame):
 	def get_path(self, e):
 		self.filePath = self.fbPanel.get_file_path()
 		self.data, self.headers = p.parse(self.filePath, ",")
-		self.cb.Clear()
-		self.cb.AppendItems(self.headers)
+		self.cb = wx.ComboBox(self, style=wx.CB_READONLY, choices = self.headers)
+		cbLabel = wx.StaticText(self, label = "X-Axis")
+		self.genButton = wx.Button(self, label="Generate Chart")
+		self.genButton.Bind(wx.EVT_BUTTON, self.generate_chart)
+		self.gsizer.Add(cbLabel, pos = (2,8), flag=wx.TOP|wx.RIGHT|wx.ALIGN_RIGHT)
+		self.gsizer.Add(self.cb, pos = (3,8), flag=wx.TOP|wx.RIGHT|wx.ALIGN_RIGHT)
+		self.gsizer.Add(self.genButton, pos = (8,8), flag=wx.TOP|wx.RIGHT|wx.ALIGN_RIGHT)
+		self.Layout()
+
+	def generate_chart(self, e):
+		self.plotPanel.plot()
 
 	def on_quit(self, e):
 		self.Close()

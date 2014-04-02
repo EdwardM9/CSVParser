@@ -9,6 +9,9 @@ Distributed under the Creative Commons Attribution 3.0 Unported license.
 import wx
 import wx.lib
 from wx.lib import filebrowsebutton
+import matplotlib
+from matplotlib import numpy
+from numpy import arange, sin
 import wxmpl
 class PlotPanel(wx.Panel):
 	def __init__(self, *args, **kwargs):
@@ -19,3 +22,11 @@ class PlotPanel(wx.Panel):
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		self.ppanel = wxmpl.PlotPanel(self, 123)#, size = (12,7))
 		sizer.Add(self.ppanel, wx.ALIGN_CENTER, wx.EXPAND)
+
+	def plot(self):
+		x = arange(0.0, 2, .01)
+		y = sin(1.2*x)
+		fig = self.ppanel.get_figure()
+		axes = fig.gca()
+		axes.plot(x,y)
+		self.ppanel.draw()

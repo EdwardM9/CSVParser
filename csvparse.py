@@ -12,7 +12,10 @@ import wx.lib
 from wx.lib import filebrowsebutton
 import constants as c
 import filebrowserpanel as fbp
+import plotpanel as pp
 import graph
+
+import parse as p
 class ParseFrame(wx.Frame):
 	def __init__(self, *args, **kwargs):
 		super(ParseFrame, self).__init__(*args, **kwargs)
@@ -34,7 +37,9 @@ class ParseFrame(wx.Frame):
 		gButton.Bind(wx.EVT_BUTTON, self.get_path)
 		sizer2.Add(gButton, wx.ALIGN_RIGHT, wx.SHAPED)
 		
+		self.plotPanel = pp.PlotPanel(self)
 		sizer.Add(sizer2, wx.ALIGN_TOP, wx.EXPAND)
+		sizer.Add(self.plotPanel, wx.ALIGN_CENTER, wx.EXPAND)
 		self.SetSizer(sizer)
 		self.SetAutoLayout(True)
 		self.SetSize((c.APP_HEIGHT, c.APP_WIDTH))
@@ -45,7 +50,8 @@ class ParseFrame(wx.Frame):
 
 	def get_path(self, e):
 		self.filePath = self.fbPanel.get_file_path()
-		graph.visualize_days(self.filePath)
+		self.data, self.headers = p.parse(self.filePath, ",")
+
 	def on_quit(self, e):
 		self.Close()
 

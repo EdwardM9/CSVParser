@@ -12,6 +12,8 @@ draw and render onto a matplotlib set of axes.
 Copyright(c) 2014 Edward Moreno
 Distributed under the Creative Commons Attribution 3.0 Unported license.
 """
+from collections import Counter
+
 import wx
 import wxmpl
 
@@ -38,6 +40,24 @@ class PlotPanel(wx.Panel):
 		values = []
 		for item in data:
 			values.append(item.get(title))
+		axes.plot(values)
+
+		#Force redraw update
+		self.ppanel.draw()
+
+	def plot_count(self, data, title):
+		"""
+		Creates a line, plots it into the wxmpl.PlotPanel and
+		 renders it.
+		"""
+		fig = self.ppanel.get_figure()
+		axes = fig.gca()
+		values = []
+
+		count = Counter(item[title] for item in data)
+		print count
+		for item in count:
+			values.append(count[item])
 		axes.plot(values)
 
 		#Force redraw update

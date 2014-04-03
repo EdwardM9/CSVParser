@@ -58,9 +58,12 @@ class ParseFrame(wx.Frame):
 		cbLabel = wx.StaticText(self, label = "X-Axis")
 		self.genButton = wx.Button(self, label="Generate Chart")
 		self.genButton.Bind(wx.EVT_BUTTON, self.generate_chart)
+		self.genButton2 = wx.Button(self, label = "Generate Count Chart")
+		self.genButton2.Bind(wx.EVT_BUTTON, self.generate_count_chart)
 		self.gsizer.Add(cbLabel, pos = (2,8), flag=wx.TOP|wx.RIGHT|wx.ALIGN_RIGHT)
 		self.gsizer.Add(self.cb, pos = (3,8), flag=wx.TOP|wx.RIGHT|wx.ALIGN_RIGHT)
 		self.gsizer.Add(self.genButton, pos = (8,8), flag=wx.TOP|wx.RIGHT|wx.ALIGN_RIGHT)
+		self.gsizer.Add(self.genButton2, pos = (10,8), flag=wx.TOP|wx.RIGHT|wx.ALIGN_RIGHT)
 		
 		#Add them all to the main layout.
 		self.sizer.Add(sizer2, wx.ALIGN_TOP, wx.EXPAND)
@@ -91,6 +94,13 @@ class ParseFrame(wx.Frame):
 		Creates the chart based on the data provided.
 		"""
 		self.plotPanel.plot(self.data, self.cb.GetValue())
+	
+	def generate_count_chart(self, e):
+		"""
+		Creates the chart based on the data provided. 
+		Counts every element matching the selected category
+		"""
+		self.plotPanel.plot_count(self.data, self.cb.GetValue())
 
 	def on_quit(self, e):
 		"""
